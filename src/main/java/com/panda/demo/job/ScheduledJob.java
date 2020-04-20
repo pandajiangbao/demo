@@ -13,15 +13,15 @@ import java.util.Date;
 @Component
 public class ScheduledJob {
 
-    @Scheduled(fixedDelay=5000)
-    public void fixedDelayJob() throws InterruptedException {
-        Thread.sleep(3000L);
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())+" >>fixedDelay执行....");
-    }
-
-    @Scheduled(fixedRate=5000)
-    public void fixedRateJob() throws InterruptedException {
-        Thread.sleep(3000L);
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())+" >>fixedRate执行....");
-    }
+//    @Scheduled(fixedDelay=5000)
+//    public void fixedDelayJob() throws InterruptedException {
+//        Thread.sleep(3000L);
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())+" >>fixedDelay执行....");
+//    }
+//
+//    @Scheduled(fixedRate=5000)
+//    public void fixedRateJob() throws InterruptedException {
+//        Thread.sleep(3000L);
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())+" >>fixedRate执行....");
+//    }
 }
