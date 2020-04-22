@@ -17,25 +17,25 @@ import java.util.List;
  * @author Panda
  * @date 4/13/2020
  */
-@CrossOrigin
 @RestController
+@RequestMapping("hello")
 public class HelloController {
 
     @Resource
     PandaRepository pandaRepository;
 
     @PreAuthorize("hasRole('users')")
-    @GetMapping(value = "Users",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "a",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Panda> helloWorld() {
         return pandaRepository.findAll();
     }
     @PreAuthorize("hasRole('Group1')")
-    @RequestMapping("Group1")
+    @RequestMapping("b")
     public String groupOne() {
         return "Hello Group 1 Users!";
     }
     @PreAuthorize("hasRole('Group2')")
-    @RequestMapping("Group2")
+    @RequestMapping("c")
     public String groupTwo() {
         return "Hello Group 2 Users!";
     }

@@ -1,0 +1,22 @@
+server:
+  port: 8888
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          azure:
+            redirect-uri: http://localhost:8888/login/oauth2/code/azure
+            client-secret: ?iSWb@AXk9bOkFKAq937vnTfpU[.ZBYz
+            client-id: cf9eb1d7-b952-478b-a0ed-e30b2de1f99e
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/demo
+
+azure:
+  activedirectory:
+    active-directory-groups: users, group1
+    user-group:
+      allowed-groups: users, group1
+    tenant-id: c618c0f5-970d-463b-b22f-cce463cc8a49

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Panda
  * @date 4/19/2020
  */
-@CrossOrigin
 @RestController
 public class AccountController {
     @GetMapping("/account")
