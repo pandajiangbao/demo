@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Slf4j
 @RestController
-@RequestMapping("oauth/accessToken")
+@RequestMapping("oauth")
 public class OauthController {
     @Value("${azure.activedirectory.tenant-id}")
     private String tenantId;
@@ -27,13 +27,13 @@ public class OauthController {
     @Value("${spring.security.oauth2.client.registration.azure.client-secret}")
     private String clientSecret;
 
-    @PostMapping
-    public String oauthLogin(@RequestParam String code) {
+    @PostMapping("accessToken")
+    public JSONObject getAccessToken(@RequestParam String code) {
         String host = "https://login.microsoftonline.com/" + tenantId + "/oauth2/v2.0/token";
         log.error(host);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("client_id", clientId);
-        body.add("scope", "https://graph.microsoft.com/mail.read");
+        body.add("scope", "api://cf9eb1d7-b952-478b-a0ed-e30b2de1f99e/App.All");
         body.add("redirect_uri", "http://localhost:8999");
         body.add("grant_type", "authorization_code");
         body.add("client_secret", clientSecret);
@@ -45,8 +45,30 @@ public class OauthController {
         ResponseEntity<JSONObject> response = restTemplate.postForEntity(host, httpEntity, JSONObject.class);
         System.out.println(response.getBody());
         if (response.getStatusCode().equals(HttpStatus.OK)){
-            return response.getBody().getString("access_token");
+            return response.getBody();
         }
-        return "error";
+        return null;
+    }
+
+    @PostMapping("refreshToken")
+    public JSONObject getRefreshToken(@RequestParam String refreshToken) {
+        String host = "https://login.microsoftonline.com/" + tenantId + "/oauth2/v2.0/token";
+        log.error(host);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("client_id", clientId);
+        body.add("scope", "api://cf9eb1d7-b952-478b-a0ed-e30b2de1f99e/App.All");
+        body.add("refresh_token", refreshToken);
+        body.add("grant_type", "refresh_token");
+        body.add("client_secret", clientSecret);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+        HttpEntity httpEntity = new HttpEntity<>(body,httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<JSONObject> response = restTemplate.postForEntity(host, httpEntity, JSONObject.class);
+        System.out.println(response.getBody());
+        if (response.getStatusCode().equals(HttpStatus.OK)){
+            return response.getBody();
+        }
+        return null;
     }
 }

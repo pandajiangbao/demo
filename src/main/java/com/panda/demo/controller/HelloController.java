@@ -1,17 +1,16 @@
 package com.panda.demo.controller;
 
-import com.panda.demo.po.Panda;
 import com.panda.demo.repository.PandaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Panda
@@ -21,22 +20,20 @@ import java.util.List;
 @RequestMapping("hello")
 public class HelloController {
 
-    @Resource
-    PandaRepository pandaRepository;
-
-    @PreAuthorize("hasRole('users')")
-    @GetMapping(value = "a",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Panda> helloWorld() {
-        return pandaRepository.findAll();
+    @GetMapping(value = "a")
+    public List<String> helloWorld() {
+        return  SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(e->((GrantedAuthority) e).getAuthority()).collect(Collectors.toList());
     }
-    @PreAuthorize("hasRole('Group1')")
+
+    @PreAuthorize("hasRole('Writer')")
     @RequestMapping("b")
     public String groupOne() {
-        return "Hello Group 1 Users!";
+        return "Hello Writer!";
     }
-    @PreAuthorize("hasRole('Group2')")
+
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping("c")
     public String groupTwo() {
-        return "Hello Group 2 Users!";
+        return "Hello Users!";
     }
 }

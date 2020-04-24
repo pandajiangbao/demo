@@ -7,12 +7,17 @@ spring:
       client:
         registration:
           azure:
-            redirect-uri: http://localhost:8888/login/oauth2/code/azure
-            client-secret: ?iSWb@AXk9bOkFKAq937vnTfpU[.ZBYz
+            redirect-uri: http://localhost:8999
+            client-secret: ync=aP3=FrqU8soDK5Hw-Qp[vafS7:JU
             client-id: cf9eb1d7-b952-478b-a0ed-e30b2de1f99e
+        provider:
+          azure:
+            jwk-set-uri: https://login.microsoftonline.com/c618c0f5-970d-463b-b22f-cce463cc8a49/discovery/keys
+            user-info-uri: https://login.microsoftonline.com/c618c0f5-970d-463b-b22f-cce463cc8a49/openid/userinfo
   data:
     mongodb:
       uri: mongodb://localhost:27017/demo
+
 
 azure:
   activedirectory:
@@ -20,3 +25,11 @@ azure:
     user-group:
       allowed-groups: users, group1
     tenant-id: c618c0f5-970d-463b-b22f-cce463cc8a49
+    session-stateless: true
+    client-id: cf9eb1d7-b952-478b-a0ed-e30b2de1f99e
+    client-secret: ync=aP3=FrqU8soDK5Hw-Qp[vafS7:JU
+    app-id-uri: api://cf9eb1d7-b952-478b-a0ed-e30b2de1f99e
+  service:
+    endpoints:
+      global:
+        aadKeyDiscoveryUri: https://login.microsoftonline.com/c618c0f5-970d-463b-b22f-cce463cc8a49/discovery/keys/
